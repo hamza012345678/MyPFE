@@ -319,7 +319,8 @@ void AirbagControl::runSystemCheck() {
     // Re-run some parts of initialization checks.
     fault_code_ = 0; // Reset for this check
     AirbagSystemState previous_state_if_not_fault = (system_state_ == AirbagSystemState::SYSTEM_READY || system_state_ == AirbagSystemState::SYSTEM_OFF) ? system_state_ : AirbagSystemState::SYSTEM_READY;
-
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     // Check critical sensors again (simulated)
     if (std::uniform_int_distribution<>(1, 50)(gen) == 1) { // Higher chance to find fault in ad-hoc check
