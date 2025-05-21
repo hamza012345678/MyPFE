@@ -1,0 +1,6 @@
+Trace de Séquence de Logs pour Point d'Entrée: ecu_body_control_module::ClimateControl
+================================================================================
+>> ENTRÉE DANS: ecu_body_control_module::ClimateControl (calimate_control.cpp:35)
+   L48: INFO: "ClimateControl: Initializing. Target Temp: %.1fC, Fan: %d, AC User Req: %s, Auto: %s",              target_temperature_celsius_, fan_speed_level_, ac_requested_by_user_ ? "ON" : "OFF", auto_mode_enabled_ ? "ON" : "OFF"
+   L51: WARNING: "ClimateControl: PowerMonitor service is NULL. AC compressor management might be impaired."
+<< SORTIE DE: ecu_body_control_module::ClimateControl

@@ -5,6 +5,8 @@
 #include <thread>    // For std::this_thread::sleep_for
 
 namespace ecu_infotainment {
+     static std::random_device rd_nav_static_generator; // Renamed to avoid conflict if one is member
+     static std::mt19937 gen_nav_static_generator(rd_nav_static_generator());
 
 // Helper to convert GPSSignalStatus enum to string for logging
 const char* gpsStatusToString(GPSSignalStatus status) {
@@ -45,9 +47,9 @@ NavigationSystem::NavigationSystem() :
     destination_ = {0.0, 0.0, ""};
 
     // Simulate map data loading
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    if (std::uniform_int_distribution<>(1, 10)(gen) > 1) { // 90% chance map data loads ok
+    std::random_device rd_local_ctor; // Local to constructor
+    std::mt19937 gen_local_ctor(rd_local_ctor());
+    if (std::uniform_int_distribution<>(1, 10)(gen_local_ctor) > 1) { // 90% chance map data loads ok
         map_data_loaded_ = true;
         LOG_INFO("NavigationSystem: Map data loaded successfully.");
     } else {
@@ -65,9 +67,9 @@ NavigationSystem::~NavigationSystem() {
 
 void NavigationSystem::simulateGPSFix() {
     GPSSignalStatus old_status = gps_status_;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    int gps_chance = std::uniform_int_distribution<>(1, 100)(gen);
+    std::random_device rd_local_gps; // Use local generator if preferred for this function
+    std::mt19937 gen_local_gps(rd_local_gps());
+    int gps_chance = std::uniform_int_distribution<>(1, 100)(gen_local_gps);
 
     if (gps_status_ == GPSSignalStatus::FAULTY) {
         LOG_WARNING("NavigationSystem: GPS module is FAULTY. Attempting reset (simulated)...");
@@ -323,8 +325,8 @@ void NavigationSystem::updateNavigationState(const VehicleState& vehicle_state) 
     last_update_time = now;
 
     // Simulate GPS status changes periodically
-    if (std::uniform_int_distribution<>(1, 20)(gen) == 1) { // Approx every 20 cycles if 1Hz update
-        simulateGPSFix(); // Internal call
+    if (std::uniform_int_distribution<>(1, 20)(gen_nav_static_generator) == 1) { 
+        simulateGPSFix(); 
     }
 
     // Simulate current location update based on speed and heading (dummy heading)
@@ -332,7 +334,7 @@ void NavigationSystem::updateNavigationState(const VehicleState& vehicle_state) 
     static double current_heading_deg = 45.0; // Start with a dummy heading
     if (vehicle_state.speed_kmh > 1.0) { // Only update location if moving
          // Simulate slight heading change
-        current_heading_deg += std::uniform_real_distribution<>(-5.0, 5.0)(gen);
+        current_heading_deg += std::uniform_real_distribution<>(-5.0, 5.0)(gen_nav_static_generator);
         if (current_heading_deg > 360.0) current_heading_deg -= 360.0;
         if (current_heading_deg < 0.0) current_heading_deg += 360.0;
 

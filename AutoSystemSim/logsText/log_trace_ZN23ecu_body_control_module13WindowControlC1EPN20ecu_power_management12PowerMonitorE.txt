@@ -1,0 +1,7 @@
+Trace de Séquence de Logs pour Point d'Entrée: ecu_body_control_module::WindowControl
+================================================================================
+>> ENTRÉE DANS: ecu_body_control_module::WindowControl (window_control.cpp:36)
+   L39: INFO: "WindowControl: Initializing..."
+   L41: WARNING: "WindowControl: PowerMonitor service is NULL. Window operations might be affected by power availability."
+   L50: INFO: "WindowControl: Initialization complete. %zu windows registered.", windows_.size()
+<< SORTIE DE: ecu_body_control_module::WindowControl

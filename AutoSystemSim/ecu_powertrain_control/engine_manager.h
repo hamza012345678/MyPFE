@@ -28,7 +28,7 @@ public:
 
     // This function will call a function in another ECU (PowerMonitor)
     bool checkSystemPower();
-
+    void updateEngineParameters();
 private:
     enum class EngineStatus {
         STOPPED,
@@ -47,8 +47,7 @@ private:
     // Pointer to a component in another ECU (dependency injection or service locator pattern conceptually)
     ecu_power_management::PowerMonitor* power_monitor_service_; // We'll need to "provide" this
 
-    bool performIgnitionSequence();
-    void updateEngineParameters(); // Simulates continuous operation
+    bool performIgnitionSequence(); // Simulates continuous operation
     bool checkOilPressure();
     void reportCriticalFault(const std::string& fault_description);
 };

@@ -5,6 +5,8 @@
 #include "../common/logger.h"
 #include "../common/datatypes.h" // For VehicleState (current speed, conceptually current location if we had it)
 #include <string>
+#include <thread>
+#include <cmath>
 #include <vector>
 #include <chrono> // For ETA calculation
 

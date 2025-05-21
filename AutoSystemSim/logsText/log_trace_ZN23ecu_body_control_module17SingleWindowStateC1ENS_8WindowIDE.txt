@@ -1,0 +1,4 @@
+Trace de Séquence de Logs pour Point d'Entrée: ecu_body_control_module::SingleWindowState::SingleWindowState
+================================================================================
+>> ENTRÉE DANS: ecu_body_control_module::SingleWindowState::SingleWindowState (window_control.h:40)
+<< SORTIE DE: ecu_body_control_module::SingleWindowState::SingleWindowState

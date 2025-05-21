@@ -74,6 +74,7 @@ private:
     void enterPostCrashSafeMode(int event_id);
     void detectSystemFaults(const CrashSensorInput& impact_data); // Continuous monitoring
 };
+ const char* airbagSysStateToString(AirbagSystemState state);
 
 } // namespace ecu_safety_systems
 

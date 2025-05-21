@@ -1,0 +1,16 @@
+Trace de Séquence de Logs pour Point d'Entrée: ecu_body_control_module::LightingControl
+================================================================================
+>> ENTRÉE DANS: ecu_body_control_module::LightingControl (lighting_control.cpp:9)
+   L15: INFO: "LightingControl: Initializing..."
+   L17: ERROR: "LightingControl: PowerMonitor service is NULL! Lighting functions may be impaired."
+   L34: INFO: "LightingControl: Initialization complete. %zu light types registered.", all_lights_.size()
+   L35: -> APPEL: performBulbCheck() (Résolu à: ecu_body_control_module::LightingControl::performBulbCheck)
+    >> ENTRÉE DANS: ecu_body_control_module::performBulbCheck (lighting_control.cpp:205)
+       L206: INFO: "LightingControl: Performing diagnostic bulb check sequence..."
+       L215: WARNING: "LightingControl: Re-confirming fault for LightType %d. Status: %d, Code: %d",                     static_cast<int>(bulb.type), static_cast<int>(bulb.status), bulb.fault_code
+       L225: ERROR: "LightingControl: BULB FAULT DETECTED for LightType %d! Code: %d",                       static_cast<int>(bulb.type), bulb.fault_code
+       L230: ERROR: "LightingControl: CIRCUIT FAULT DETECTED for LightType %d! Code: %d",                       static_cast<int>(bulb.type), bulb.fault_code
+       L237: DEBUG: "LightingControl: Bulb check OK for LightType %d (currently ON).", static_cast<int>(bulb.type)
+       L241: INFO: "LightingControl: Bulb check sequence complete."
+    << SORTIE DE: ecu_body_control_module::performBulbCheck
+<< SORTIE DE: ecu_body_control_module::LightingControl

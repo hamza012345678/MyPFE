@@ -3,6 +3,7 @@
 #include <numeric>   // For std::accumulate
 #include <algorithm> // For std::min/max, std::sort
 #include <cmath>     // For fabs
+#include <thread>
 
 namespace ecu_safety_systems {
 

@@ -3,6 +3,7 @@
 
 #include "../common/logger.h"
 #include "../common/datatypes.h"
+#include "../ecu_safety_systems/airbag_control.h"
 
 // Include headers for all major ECU managers/controllers
 #include "../ecu_powertrain_control/engine_manager.h"
@@ -69,7 +70,7 @@ private:
 
     // --- Vehicle State ---
     VehicleState current_vehicle_state_;
-    CrashSensorInput current_crash_sensors_input_; // For Airbag system
+    ecu_safety_systems::CrashSensorInput current_crash_sensors_input_; // For Airbag system
     std::vector<SensorData> current_wheel_speed_sensors_; // For ABS
     double current_brake_pedal_pressure_; // For ABS
 

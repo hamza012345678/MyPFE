@@ -2,6 +2,9 @@
 #include <thread>   // For std::this_thread::sleep_for
 #include <chrono>   // For std::chrono::milliseconds
 #include <algorithm> // for std::generate, std::fill
+#include <random>
+#include <logger.h>
+#include <airbag_control.h>
 
 namespace main_application {
 
