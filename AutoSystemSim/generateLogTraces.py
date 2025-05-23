@@ -1,115 +1,166 @@
+# generateLogTraces.py
+
 import json
 import os
 import re
 
 # --- CONFIGURATION ---
-INPUT_JSON_FILE = "static_analysis_scheme_clang.json"
-OUTPUT_LOGS_TEXT_DIR = "logsText" 
-MAX_TRACE_DEPTH = 8 
+INPUT_JSON_FILE = "static_analysis_scheme_clang.json" # Doit être généré par parsingCodeBaseClang.py avec DEBUG_TARGET_FILE_REL_PATH = None
+OUTPUT_LOGS_TEXT_DIR = "logsText_generated_traces" # Nouveau nom pour éviter confusion
+MAX_TRACE_DEPTH = 10 # Augmenté un peu
+SIMULATE_LOOP_ITERATIONS = 1 # Combien de fois simuler le corps d'une boucle
+TRACE_IF_THEN = True
+TRACE_IF_ELSE = True # Mettre à False pour ne pas tracer la branche else par défaut
 
-IGNORE_CALL_DISPLAY_PREFIXES = (
-    "std::", "__gnu_cxx::", "printf", "rand", "srand", "exit", "abort", "malloc", "free",
-    "getCurrentTimestamp", 
-    "std::chrono", "std::this_thread", "std::vector", "std::map", "std::list", "std::set",
-    "std::basic_string", "std::basic_ostream", "std::basic_istream", "std::cout", "std::cerr",
-    "std::uniform_int_distribution", "std::uniform_real_distribution",
-    "std::mersenne_twister_engine", "std::random_device", "std::to_string",
-    "os::", "re::", "json::", 
-    "clang::"
-)
 # --- FIN CONFIGURATION ---
 
+# Fonctions utilitaires (sanitize_for_filename, find_matching_usr_keys - peuvent rester les mêmes que votre version)
 def sanitize_for_filename(text):
     if not text: return "_empty_or_none_"
     text = str(text)
     text = text.replace("::", "_NS_")
     text = re.sub(r'[<>:"/\\|?*]', '_', text)
-    text = re.sub(r"[^\w_.-]", "_", text)
+    text = re.sub(r"[^\w_.-]", "_", text) # Conserver points et tirets
     text = text.strip('_.- ')
-    max_len = 100
+    max_len = 100 # Limiter la longueur pour éviter des noms de fichiers trop longs
     if len(text) > max_len: text = text[:max_len] + "_TRUNC"
     return text if text else "_sanitized_empty_"
 
-def macro_name_from_raw(raw_statement): 
-    if not raw_statement: return None
-    match = re.match(r"(\w+)\s*\(", raw_statement)
-    return match.group(1) if match else None
-
-LOG_MACRO_NAMES = ["LOG_FATAL", "LOG_ERROR", "LOG_WARNING", "LOG_INFO", "LOG_DEBUG"]
-LOG_ARG_EXTRACT_PATTERNS = {
-    name: re.compile(r"{}\s*\((.*)\)\s*(;)?".format(re.escape(name)), re.DOTALL)
-    for name in LOG_MACRO_NAMES
-}
-
-def parse_log_arguments_from_string(args_str_combined):
-    args_str_combined = args_str_combined.strip()
-    format_string = args_str_combined 
-    argument_expressions = []
-    fmt_str_match = re.match(r'\s*(L?"(?:\\.|[^"\\])*")', args_str_combined)
-    if fmt_str_match:
-        format_string = fmt_str_match.group(1).strip()
-        remaining_args_str = args_str_combined[fmt_str_match.end():].strip()
-        if remaining_args_str.startswith(','):
-            remaining_args_str = remaining_args_str[1:].strip()
-        if remaining_args_str:
-            current_arg = ""
-            paren_level = 0
-            angle_bracket_level = 0 
-            in_string_literal = False
-            in_char_literal = False
-            for char_idx, char in enumerate(remaining_args_str):
-                if char == '"' and (char_idx == 0 or remaining_args_str[char_idx-1] != '\\'):
-                    in_string_literal = not in_string_literal
-                elif char == "'" and (char_idx == 0 or remaining_args_str[char_idx-1] != '\\'):
-                    in_char_literal = not in_char_literal
-                if not in_string_literal and not in_char_literal:
-                    if char == '(': paren_level += 1
-                    elif char == ')': paren_level = max(0, paren_level - 1)
-                    elif char == '<': angle_bracket_level +=1
-                    elif char == '>': angle_bracket_level = max(0, angle_bracket_level -1)
-                    elif char == ',' and paren_level == 0 and angle_bracket_level == 0:
-                        if current_arg.strip(): argument_expressions.append(current_arg.strip())
-                        current_arg = ""
-                        continue
-                current_arg += char
-            if current_arg.strip():
-                argument_expressions.append(current_arg.strip())
-    return format_string, argument_expressions
+# Plus besoin de LOG_MACRO_NAMES, LOG_ARG_EXTRACT_PATTERNS, parse_log_arguments_from_string ici
+# car ces infos sont déjà dans le JSON d'entrée.
 
 def find_matching_usr_keys(all_functions_data_dict, patterns_or_criteria):
+    # Cette fonction peut rester telle quelle, elle est utile pour sélectionner les points d'entrée
     matched_usr_keys = set()
+    if not patterns_or_criteria: # Si vide, tracer toutes les fonctions (peut être beaucoup !)
+        print("ℹ️ Aucun critère de point d'entrée fourni, tentative de tracer toutes les fonctions trouvées.")
+        return list(all_functions_data_dict.keys())
+
     for criteria_pattern in patterns_or_criteria:
         for func_key, data in all_functions_data_dict.items(): 
             display_name = data.get("display_signature", "") 
             if criteria_pattern == display_name or criteria_pattern == func_key: 
                 matched_usr_keys.add(func_key)
                 continue
+            # Permettre des correspondances partielles ou de fin de chaîne
             if display_name and display_name.endswith(criteria_pattern):
                 matched_usr_keys.add(func_key)
                 continue
+            # Permettre la correspondance du nom de fonction simple sans namespace
             if display_name and "::" not in criteria_pattern and display_name.endswith("::" + criteria_pattern):
                 matched_usr_keys.add(func_key)
                 continue
-            if display_name and criteria_pattern in display_name: 
-                matched_usr_keys.add(func_key)
+            # Correspondance générique "contains" (peut être trop large)
+            # if display_name and criteria_pattern in display_name: 
+            # matched_usr_keys.add(func_key)
     
     if not matched_usr_keys and patterns_or_criteria:
         print(f"⚠️ Aucune clé de fonction trouvée correspondant aux critères : {patterns_or_criteria}")
-        print("   Considérez ces signatures d'affichage de votre code base (la clé pour le script est 'function_id_key'):")
-        count = 0
-        for usr_k_ex, data_example in all_functions_data_dict.items(): 
-            sig_display_example = data_example.get("display_signature", "N/A")
-            if any( (patt_part in sig_display_example) for patt in patterns_or_criteria for patt_part in patt.split("::") if patt_part) or \
-               any( (patt == sig_display_example.split("::")[-1]) for patt in patterns_or_criteria if "::" not in patt):
-                print(f"     - Affichage: \"{sig_display_example}\" (Clé pour le script: \"{usr_k_ex}\")")
-                count += 1
-                if count >= 10: break
-        if count == 0 and len(all_functions_data_dict) > 0: 
-            print("   (Affichage de quelques exemples généraux car aucune correspondance spécifique trouvée)")
-            for i, (usr_k_ex, data_ex) in enumerate(all_functions_data_dict.items()):
-                if i >= 5: break
-                print(f"     - Affichage: \"{data_ex.get('display_signature', 'N/A')}\" (Clé pour le script: \"{usr_k_ex}\")")
+        # ... (le reste de la logique d'aide pour afficher des exemples) ...
     return list(matched_usr_keys)
+
+
+# Nouvelle fonction récursive pour traiter les execution_elements
+def process_execution_elements(elements, all_functions_dict, current_log_sequence, depth, indent_level, call_stack):
+    if depth > MAX_TRACE_DEPTH:
+        current_log_sequence.append(f"{'  ' * indent_level} L? PROFONDEUR MAX ATTEINTE (dans elements)")
+        return
+
+    for item in elements:
+        item_type = item.get("type")
+        item_line = item.get("line", "?")
+
+        if item_type == "LOG":
+            log_level = item['level']
+            # Utiliser la chaîne de format nettoyée du JSON
+            fmt_str = item.get('log_format_string', "[FormatManquant]") 
+            # Les arguments sont maintenant des chaînes représentant le code source
+            args_list = item.get('log_arguments', []) 
+            
+            # Simuler le message de log (remplacement simple des % pour l'affichage)
+            # Une simulation plus avancée pourrait générer des valeurs aléatoires basées sur le type
+            num_placeholders = fmt_str.count("%")
+            simulated_args = []
+            for i, arg_code in enumerate(args_list):
+                if arg_code == "[complex_arg]":
+                    simulated_args.append(f"<val_expr_complexe_{i+1}>")
+                elif arg_code.startswith("[UNABLE_TO_GET_SOURCE"):
+                     simulated_args.append(f"<val_arg_inconnu_{i+1}>")
+                elif arg_code:
+                    simulated_args.append(f"<{arg_code.strip()}>") # Mettre entre <> pour montrer que c'est une variable/expression
+                else: # Devrait être traité par [complex_arg] ou [UNABLE...]
+                    simulated_args.append(f"<val_vide_{i+1}>")
+
+            # Remplacer les placeholders %s, %d, etc.
+            # Ceci est une simplification grossière. Une vraie implémentation de formatage serait nécessaire.
+            log_msg_for_trace = fmt_str
+            try:
+                # Essayer un formatage simple si le nombre d'args correspond
+                if num_placeholders > 0 and num_placeholders == len(simulated_args):
+                    # Remplacer %s, %d, %f etc. par les args simulés
+                    # Cette méthode est basique et ne gère pas tous les cas de printf
+                    temp_fmt_str = log_msg_for_trace
+                    for placeholder in ["%s", "%d", "%zu", "%f", "%.1f", "%.2f", "%X"]: # Ajouter d'autres si besoin
+                        while placeholder in temp_fmt_str and simulated_args:
+                            temp_fmt_str = temp_fmt_str.replace(placeholder, str(simulated_args.pop(0)), 1)
+                    log_msg_for_trace = temp_fmt_str
+                elif args_list: # S'il y a des args mais pas de formatage simple
+                    log_msg_for_trace += " (Args: " + ", ".join(args_list) + ")"
+
+            except Exception as e_fmt:
+                print(f"    [WARN_FORMAT] Erreur lors du formatage du log '{fmt_str}' avec {args_list}: {e_fmt}")
+                log_msg_for_trace = f"{fmt_str} [ErreurFormatageArgs: {args_list}]"
+
+            current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: {log_level}: {log_msg_for_trace}")
+
+        elif item_type == "CALL":
+            callee_expr = item.get("callee_expression", "N/A")
+            resolved_callee_key = item.get("callee_resolved_key")
+            display_callee_name = item.get("callee_resolved_display_name", callee_expr)
+
+            if resolved_callee_key and resolved_callee_key in all_functions_dict:
+                if resolved_callee_key in call_stack:
+                    current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: -> APPEL RÉCURSIF SAUTÉ vers {display_callee_name}")
+                else:
+                    current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: -> APPEL: {display_callee_name}")
+                    call_stack.append(resolved_callee_key)
+                    callee_func_data = all_functions_dict[resolved_callee_key]
+                    process_execution_elements(callee_func_data.get("execution_elements", []), 
+                                               all_functions_dict, current_log_sequence, 
+                                               depth + 1, indent_level + 1, call_stack)
+                    call_stack.pop()
+                    current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: <- RETOUR DE: {display_callee_name}")
+            else:
+                current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: -> APPEL (Externe/Non Analysé): {display_callee_name}")
+        
+        elif item_type == "IF_STMT":
+            current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: IF ({item.get('condition_expression_text', '')}) {{")
+            if TRACE_IF_THEN and item.get("then_branch_elements"):
+                process_execution_elements(item["then_branch_elements"], all_functions_dict, 
+                                           current_log_sequence, depth, indent_level + 1, call_stack)
+            current_log_sequence.append(f"{'  ' * indent_level}}} ") # Fin du then
+            if TRACE_IF_ELSE and item.get("else_branch_elements"):
+                current_log_sequence.append(f"{'  ' * indent_level}ELSE {{")
+                process_execution_elements(item["else_branch_elements"], all_functions_dict, 
+                                           current_log_sequence, depth, indent_level + 1, call_stack)
+                current_log_sequence.append(f"{'  ' * indent_level}}} ") # Fin du else
+        
+        elif item_type.endswith("_LOOP") or item_type == "SWITCH_BLOCK": # FOR_LOOP, WHILE_LOOP, etc.
+            loop_label = item_type.replace("_LOOP", "").replace("_BLOCK", "")
+            current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: {loop_label} {{")
+            for i in range(SIMULATE_LOOP_ITERATIONS):
+                if SIMULATE_LOOP_ITERATIONS > 1:
+                    current_log_sequence.append(f"{'  ' * (indent_level+1)}// Itération de boucle simulée {i+1}")
+                process_execution_elements(item.get("body_elements", []), all_functions_dict, 
+                                           current_log_sequence, depth, indent_level + 1, call_stack)
+            current_log_sequence.append(f"{'  ' * indent_level}}}")
+        
+        elif item_type in ["CASE_LABEL", "DEFAULT_LABEL"]:
+             current_log_sequence.append(f"{'  ' * indent_level}L{item_line}: {item.get('case_expression_text', 'default')}:")
+             # Les éléments d'un case sont des frères dans le JSON, ils seront traités par la boucle principale.
+
+        # D'autres types d'éléments pourraient être ajoutés ici
+
 
 def generate_text_log_sequence_from_data(entry_point_key, all_functions_dict, output_filepath, max_depth=10):
     entry_point_func_data = all_functions_dict.get(entry_point_key)
@@ -119,96 +170,20 @@ def generate_text_log_sequence_from_data(entry_point_key, all_functions_dict, ou
     entry_point_display_name = entry_point_func_data.get('display_signature', entry_point_key)
 
     log_sequence_output = [] 
-    call_stack_for_recursion_check = [] 
+    call_stack = [] # Renommé pour éviter conflit avec le nom de la fonction
 
-    def trace_recursive(current_func_key, depth, indent_level):
-        func_data = all_functions_dict.get(current_func_key)
-        func_display_name = func_data.get("display_signature", current_func_key) if func_data else current_func_key
+    # Entête du log de trace
+    log_sequence_output.append(f">> ENTRÉE DANS POINT PRINCIPAL: {entry_point_display_name} ({os.path.basename(entry_point_func_data['file'])}:{entry_point_func_data['line']})")
+    call_stack.append(entry_point_key)
 
-        if depth > max_depth:
-            log_sequence_output.append(f"{'  ' * indent_level} L? PROFONDEUR MAX ATTEINTE à {func_display_name}")
-            return
-        
-        if current_func_key in call_stack_for_recursion_check:
-             log_sequence_output.append(f"{'  ' * indent_level} L? APPEL RÉCURSIF SAUTÉ vers {func_display_name} (déjà dans la pile d'appels)")
-             return
-        
-        call_stack_for_recursion_check.append(current_func_key)
-        
-        if not func_data: 
-            log_sequence_output.append(f"{'  ' * indent_level} L? APPEL EXTERNE/NON ANALYSÉ: {func_display_name} (Clé: {current_func_key})")
-            if current_func_key in call_stack_for_recursion_check: call_stack_for_recursion_check.pop()
-            return
+    process_execution_elements(entry_point_func_data.get("execution_elements", []), 
+                               all_functions_dict, log_sequence_output, 
+                               0, 1, call_stack) # depth commence à 0, indent à 1
 
-        log_sequence_output.append(f"{'  ' * indent_level}>> ENTRÉE DANS: {func_display_name} ({os.path.basename(func_data['file'])}:{func_data['line']})")
+    call_stack.pop()
+    log_sequence_output.append(f"<< SORTIE DE POINT PRINCIPAL: {entry_point_display_name}")
 
-        items_in_function = []
-        for log_item in func_data.get("logs_in_order", []): 
-            items_in_function.append({'type': 'log', 'line': log_item.get("line",0), 'data': log_item})
-        for call_item in func_data.get("calls_in_order", []): 
-            resolved_key_for_trace = call_item.get("callee_resolved_key")
-            display_name_for_filter = call_item.get("callee_resolved_display_name", call_item.get("callee_expression",""))
-            is_ignorable = any(display_name_for_filter.startswith(p) for p in IGNORE_CALL_DISPLAY_PREFIXES)
-            
-            if not is_ignorable or (resolved_key_for_trace and resolved_key_for_trace in all_functions_dict):
-                 items_in_function.append({'type': 'call', 'line': call_item.get("line",0), 'data': call_item})
-        
-        items_in_function.sort(key=lambda x: x['line'])
-
-        for item in items_in_function:
-            item_line = item['line']
-            item_data = item['data']
-            if item['type'] == "log":
-                log_level = item_data['level']
-                fmt_str = item_data.get('log_format_string', item_data.get('message_args_str_combined', '[MsgLogErreur]'))
-                args_list = item_data.get('log_arguments', [])
-                if fmt_str.startswith("[RawMacroText:") and not args_list : 
-                    raw_text_content = item_data.get('message_args_str_combined', fmt_str) 
-                    if raw_text_content.startswith("[RawMacroText:"): 
-                         raw_text_content = raw_text_content[len("[RawMacroText: "):-1]
-                    actual_macro_name_from_raw = macro_name_from_raw(item_data.get('raw_log_statement', raw_text_content))
-                    if actual_macro_name_from_raw:
-                        arg_pattern_fallback = LOG_ARG_EXTRACT_PATTERNS.get(actual_macro_name_from_raw)
-                        if arg_pattern_fallback:
-                            match_fallback = arg_pattern_fallback.search(item_data.get('raw_log_statement', raw_text_content))
-                            if match_fallback and match_fallback.group(1) is not None:
-                                fallback_combined_args = match_fallback.group(1).strip()
-                                fmt_str_fb, args_list_fb = parse_log_arguments_from_string(fallback_combined_args)
-                                if fmt_str_fb != fallback_combined_args or args_list_fb : 
-                                    fmt_str = fmt_str_fb
-                                    args_list = args_list_fb
-                                else: 
-                                    fmt_str = fallback_combined_args 
-                                    args_list = []
-                            else:
-                                fmt_str = f"[ArgsNonParsésDe: {raw_text_content[:50]}...]"
-                                args_list = []
-                        else:
-                            fmt_str = f"[PasDeRegexPour {actual_macro_name_from_raw} sur: {raw_text_content[:50]}...]"
-                            args_list = []
-                    else:
-                        fmt_str = f"[MacroNonID Dans: {raw_text_content[:50]}...]"
-                        args_list = []
-                log_msg_for_trace = fmt_str
-                if args_list:
-                    log_msg_for_trace = f"{fmt_str}, {', '.join(args_list)}"
-                log_sequence_output.append(f"{'  ' * (indent_level + 1)} L{item_line}: {log_level}: {log_msg_for_trace}")
-            elif item['type'] == "call":
-                callee_expr = item_data["callee_expression"]
-                resolved_callee_key = item_data.get("callee_resolved_key") 
-                display_callee_name = item_data.get("callee_resolved_display_name", callee_expr)
-                should_trace_deeper = False
-                if resolved_callee_key and resolved_callee_key in all_functions_dict:
-                    if not any(display_callee_name.startswith(p) for p in IGNORE_CALL_DISPLAY_PREFIXES):
-                        should_trace_deeper = True
-                if should_trace_deeper:
-                    log_sequence_output.append(f"{'  ' * (indent_level + 1)} L{item_line}: -> APPEL: {callee_expr} (Résolu à: {display_callee_name})")
-                    trace_recursive(resolved_callee_key, depth + 1, indent_level + 2)
-        
-        log_sequence_output.append(f"{'  ' * indent_level}<< SORTIE DE: {func_display_name}")
-        if current_func_key in call_stack_for_recursion_check: call_stack_for_recursion_check.pop()
-
-    trace_recursive(entry_point_key, 0, 0)
+    # Sauvegarde du fichier
     try:
         os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
         with open(output_filepath, "w", encoding="utf-8") as f:
@@ -220,42 +195,28 @@ def generate_text_log_sequence_from_data(entry_point_key, all_functions_dict, ou
     except Exception as e:
         print(f"❌ Erreur lors de la sauvegarde de la trace textuelle dans {output_filepath}: {e}")
 
+
 def main_generate_traces():
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Déterminer le chemin de la codebase (supposons qu'il est un niveau au-dessus si le script est dans un sous-dossier)
+    # ou le même dossier si le script est à la racine.
+    # Pour cet exemple, on assume que ce script est à la racine de AutoSystemSim.
     codebase_path = script_dir 
-    if os.path.basename(script_dir) == "AutoSystemSim":
-        pass 
-    elif os.path.isdir(os.path.join(script_dir, "AutoSystemSim")):
-        codebase_path = os.path.join(script_dir, "AutoSystemSim")
-    else: 
-        print(f"⚠️ Impossible de déterminer automatiquement le chemin vers 'AutoSystemSim' depuis '{script_dir}'.")
-        print(f"    Utilisation du répertoire courant '{os.getcwd()}' comme base pour '{OUTPUT_LOGS_TEXT_DIR}'.")
-        codebase_path = os.getcwd() 
+    if os.path.basename(codebase_path).lower() != "autosystemsim" and \
+       os.path.isdir(os.path.join(os.path.dirname(codebase_path), "AutoSystemSim")):
+        codebase_path = os.path.join(os.path.dirname(codebase_path), "AutoSystemSim")
+    elif not os.path.basename(codebase_path).lower() == "autosystemsim":
+         print(f"⚠️ Le script ne semble pas être dans 'AutoSystemSim' ou un dossier parent direct.")
+         print(f"    Le chemin de base pour la sortie sera : {codebase_path}")
 
-    print(f"ℹ️ Chemin de base pour la sortie : {os.path.abspath(codebase_path)}")
 
-    # S'assurer que le fichier JSON d'entrée est relatif au répertoire du script,
-    # ou à un chemin absolu si vous préférez.
-    # Si parsingCodeBaseClang.py est à la racine de AutoSystemSim, et generateLogTraces.py aussi,
-    # alors INPUT_JSON_FILE devrait être juste le nom du fichier.
-    # Si generateLogTraces.py est dans un sous-dossier, ajustez le chemin.
-    # Pour cet exemple, supposons qu'il est au même niveau que parsingCodeBaseClang.py
-    # et que parsingCodeBaseClang.py a généré le JSON là.
+    print(f"ℹ️ Chemin de base pour la sortie des traces : {os.path.abspath(codebase_path)}")
     
-    # Déterminer le chemin d'entrée du JSON par rapport à l'emplacement de ce script
-    # Si parsingCodeBaseClang.py et ce script sont dans le même dossier (racine de AutoSystemSim)
-    # Alors json_input_path peut être juste INPUT_JSON_FILE
-    # S'ils sont dans des dossiers différents, il faut ajuster.
-    # Pour la simplicité, on suppose que static_analysis_scheme_clang.json est dans le même dossier
-    # que ce script generateLogTraces.py (ou que vous ajustez INPUT_JSON_FILE avec un chemin relatif/absolu)
-    json_input_path = INPUT_JSON_FILE
-    if not os.path.isabs(json_input_path):
-         json_input_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), INPUT_JSON_FILE)
-
+    json_input_path = os.path.join(codebase_path, INPUT_JSON_FILE) # S'attendre à ce que le JSON soit à la racine d'AutoSystemSim
 
     if not os.path.exists(json_input_path):
         print(f"❌ ERREUR : Le fichier JSON d'analyse statique '{json_input_path}' n'a pas été trouvé.")
-        print("   Veuillez d'abord exécuter 'parsingCodeBaseClang.py'.")
+        print("   Veuillez d'abord exécuter 'parsingCodeBaseClang.py' pour générer ce fichier (avec DEBUG_TARGET_FILE_REL_PATH = None).")
         return
 
     try:
@@ -275,29 +236,229 @@ def main_generate_traces():
         print("⚠️ Aucune donnée de fonction trouvée dans le fichier JSON. Impossible de générer les traces.")
         return
     
-    # IMPORTANT: Mettez à jour ces patterns avec les 'display_signature' exactes de votre JSON
-    #            ou utilisez le fichier généré par `extract_signatures.py` pour peupler cette liste.
+    # Définir les points d'entrée pour lesquels générer des traces
+    # Vous pouvez les obtenir depuis le fichier généré par extract_signatures.py
+    # ou les lister manuellement. Utilisez les "display_signature" ou "function_id_key".
     entry_point_display_patterns = [
-        "ecu_body_control_module::BulbState::BulbState",
-        "ecu_body_control_module::ClimateControl",
-        "ecu_body_control_module::LightingControl",
-        "ecu_body_control_module::SingleWindowState::SingleWindowState",
-        "ecu_body_control_module::WindowControl",
-        "ecu_body_control_module::acStatusToString",
+        # Exemples (à adapter à votre base de code)
+         "ecu_body_control_module::BulbState::BulbState",
+    "ecu_body_control_module::ClimateControl",
+    "ecu_body_control_module::LightingControl",
+    "ecu_body_control_module::SingleWindowState::SingleWindowState",
+    "ecu_body_control_module::WindowControl",
+    "ecu_body_control_module::acStatusToString",
+    "ecu_body_control_module::activateHazardLights",
+    "ecu_body_control_module::activateIndicator",
+    "ecu_body_control_module::adjustAirDistributionForMode",
+    "ecu_body_control_module::adjustFanForTemperature",
+    "ecu_body_control_module::airDistModeToString",
+    "ecu_body_control_module::canActivateAC",
+    "ecu_body_control_module::canOperateWindow",
+    "ecu_body_control_module::checkAntiPinch",
+    "ecu_body_control_module::checkBrakeLights",
+    "ecu_body_control_module::controlACCompressor",
+    "ecu_body_control_module::findBulb",
+    "ecu_body_control_module::findWindow",
+    "ecu_body_control_module::getACCompressorStatus",
+    "ecu_body_control_module::getAirDistribution",
+    "ecu_body_control_module::getCurrentInteriorTemp",
+    "ecu_body_control_module::getFanSpeed",
+    "ecu_body_control_module::getLightStatus",
+    "ecu_body_control_module::getTargetTemperature",
+    "ecu_body_control_module::getWindowPosition",
+    "ecu_body_control_module::handleAutomaticHeadlights",
+    "ecu_body_control_module::isACActive",
+    "ecu_body_control_module::isAutoModeEnabled",
+    "ecu_body_control_module::isRecirculationActive",
+    "ecu_body_control_module::manageAutomaticOperation",
+    "ecu_body_control_module::moveWindow",
+    "ecu_body_control_module::performBulbCheck",
+    "ecu_body_control_module::setACActive",
+    "ecu_body_control_module::setAirDistribution",
+    "ecu_body_control_module::setAllWindowsLock",
+    "ecu_body_control_module::setAutoMode",
+    "ecu_body_control_module::setChildLock",
+    "ecu_body_control_module::setFanSpeed",
+    "ecu_body_control_module::setLightState",
+    "ecu_body_control_module::setRecirculationActive",
+    "ecu_body_control_module::setSpecificLight",
+    "ecu_body_control_module::setTargetTemperature",
+    "ecu_body_control_module::simulateMotorMovement",
+    "ecu_body_control_module::simulateTemperatureChange",
+    "ecu_body_control_module::stopWindowMovement",
+    "ecu_body_control_module::updateClimateState",
+    "ecu_body_control_module::updateLighting",
+    "ecu_body_control_module::updateWindowStates",
+    "ecu_body_control_module::windowIdToString",
+    "ecu_body_control_module::windowPosToString",
+    "ecu_body_control_module::~ClimateControl",
+    "ecu_body_control_module::~LightingControl",
+    "ecu_body_control_module::~WindowControl",
+    "ecu_infotainment::MapCoordinate::distanceTo",
+    "ecu_infotainment::MapCoordinate::isValid",
+    "ecu_infotainment::MediaPlayer",
+    "ecu_infotainment::NavigationSystem",
+    "ecu_infotainment::calculateRoute",
+    "ecu_infotainment::cancelNavigation",
+    "ecu_infotainment::checkOffRoute",
+    "ecu_infotainment::findAddressCoordinates",
+    "ecu_infotainment::getCurrentGuidanceInstruction",
+    "ecu_infotainment::getCurrentLocation",
+    "ecu_infotainment::getCurrentNavigationStatus",
+    "ecu_infotainment::getCurrentSource",
+    "ecu_infotainment::getCurrentTrackElapsedTime",
+    "ecu_infotainment::getCurrentTrackInfo",
+    "ecu_infotainment::getDistanceToDestinationKm",
+    "ecu_infotainment::getDistanceToNextManeuverKm",
+    "ecu_infotainment::getEstimatedTimeOfArrivalSeconds",
+    "ecu_infotainment::getGPSSignalStatus",
+    "ecu_infotainment::getPlaybackStatus",
+    "ecu_infotainment::getVolume",
+    "ecu_infotainment::gpsStatusToString",
+    "ecu_infotainment::handleTrackEnd",
+    "ecu_infotainment::isMapDataAvailable",
+    "ecu_infotainment::isMuted",
+    "ecu_infotainment::loadPlaylist",
+    "ecu_infotainment::mediaSourceToString",
+    "ecu_infotainment::mute",
+    "ecu_infotainment::navStatusToString",
+    "ecu_infotainment::nextTrack",
+    "ecu_infotainment::pause",
+    "ecu_infotainment::play",
+    "ecu_infotainment::playTrackAtIndex",
+    "ecu_infotainment::playbackStatusToString",
+    "ecu_infotainment::previousTrack",
+    "ecu_infotainment::provideGuidanceUpdate",
+    "ecu_infotainment::reportNavigationError",
+    "ecu_infotainment::reportPlaybackError",
+    "ecu_infotainment::seek",
+    "ecu_infotainment::selectSource",
+    "ecu_infotainment::setDestination",
+    "ecu_infotainment::setDestinationByAddress",
+    "ecu_infotainment::setVolume",
+    "ecu_infotainment::simulateGPSFix",
+    "ecu_infotainment::simulateLocationUpdate",
+    "ecu_infotainment::simulateTimePassing",
+    "ecu_infotainment::stop",
+    "ecu_infotainment::tuneRadio",
+    "ecu_infotainment::updateNavigationState",
+    "ecu_infotainment::updatePlaybackState",
+    "ecu_infotainment::~MediaPlayer",
+    "ecu_infotainment::~NavigationSystem",
+    "ecu_power_management::PowerMonitor",
+    "ecu_power_management::assessSystemStability",
+    "ecu_power_management::checkVoltageLevels",
+    "ecu_power_management::getBatteryVoltage",
+    "ecu_power_management::isPowerStable",
+    "ecu_power_management::simulateHighLoadEvent",
+    "ecu_power_management::updatePowerStatus",
+    "ecu_power_management::~PowerMonitor",
+    "ecu_powertrain_control::EngineManager",
+    "ecu_powertrain_control::FuelSystem",
+    "ecu_powertrain_control::TransmissionManager",
+    "ecu_powertrain_control::canShiftGear",
+    "ecu_powertrain_control::canShiftToMode",
+    "ecu_powertrain_control::checkFuelPressure",
+    "ecu_powertrain_control::checkOilPressure",
+    "ecu_powertrain_control::checkSystemPower",
+    "ecu_powertrain_control::checkTransmissionHealth",
+    "ecu_powertrain_control::getCurrentGear",
+    "ecu_powertrain_control::getCurrentMode",
+    "ecu_powertrain_control::getCurrentRPM",
+    "ecu_powertrain_control::getEngineState",
+    "ecu_powertrain_control::getEngineTemperature",
+    "ecu_powertrain_control::getFuelLevel",
+    "ecu_powertrain_control::injectFuel",
+    "ecu_powertrain_control::isShiftInProgress",
+    "ecu_powertrain_control::manageAutomaticShifting",
+    "ecu_powertrain_control::performGearShift",
+    "ecu_powertrain_control::performIgnitionSequence",
+    "ecu_powertrain_control::primePump",
+    "ecu_powertrain_control::reportCriticalFault",
+    "ecu_powertrain_control::requestNeutral",
+    "ecu_powertrain_control::setTargetRPM",
+    "ecu_powertrain_control::setTransmissionMode",
+    "ecu_powertrain_control::shiftDown",
+    "ecu_powertrain_control::shiftUp",
+    "ecu_powertrain_control::simulateFuelConsumption",
+    "ecu_powertrain_control::startEngine",
+    "ecu_powertrain_control::stopEngine",
+    "ecu_powertrain_control::updateEngineParameters",
+    "ecu_powertrain_control::updateState",
+    "ecu_powertrain_control::updateTransmissionTemperature",
+    "ecu_powertrain_control::~EngineManager",
+    "ecu_powertrain_control::~FuelSystem",
+    "ecu_powertrain_control::~TransmissionManager",
+    "ecu_safety_systems::ABSControl",
+    "ecu_safety_systems::AirbagControl",
+    "ecu_safety_systems::absStateToString",
+    "ecu_safety_systems::airbagIdToString",
+    "ecu_safety_systems::airbagSysStateToString",
+    "ecu_safety_systems::checkForSystemFaults",
+    "ecu_safety_systems::detectSystemFaults",
+    "ecu_safety_systems::detectWheelLockup",
+    "ecu_safety_systems::enterPostCrashSafeMode",
+    "ecu_safety_systems::evaluateCrashSeverity",
+    "ecu_safety_systems::fireAirbag",
+    "ecu_safety_systems::getCurrentState",
+    "ecu_safety_systems::getDeployedAirbags",
+    "ecu_safety_systems::getSystemState",
+    "ecu_safety_systems::holdPressure",
+    "ecu_safety_systems::initialize",
+    "ecu_safety_systems::initializeSystem",
+    "ecu_safety_systems::isABSInterventionActive",
+    "ecu_safety_systems::modulateBrakePressure",
+    "ecu_safety_systems::processBraking",
+    "ecu_safety_systems::processImpactData",
+    "ecu_safety_systems::reapplyPressure",
+    "ecu_safety_systems::releasePressure",
+    "ecu_safety_systems::runDiagnostics",
+    "ecu_safety_systems::runSystemCheck",
+    "ecu_safety_systems::triggerDeploymentSequence",
+    "ecu_safety_systems::updateVehicleReferenceSpeed",
+    "ecu_safety_systems::~ABSControl",
+    "ecu_safety_systems::~AirbagControl",
+    "getCurrentTimestamp",
+    "main",
+    "main_application::MainVehicleController",
+    "main_application::checkSystemHealth",
+    "main_application::handleIgnitionOff",
+    "main_application::handleIgnitionOn",
+    "main_application::initializeAllSystems",
+    "main_application::periodicECUUpdates",
+    "main_application::runMainLoop",
+    "main_application::shutdownAllSystems",
+    "main_application::simulateDrivingCycle",
+    "main_application::updateVehicleStateInputs",
+    "main_application::~MainVehicleController" # Si vous avez une fonction main globale
+        # "ecu_safety_systems::AirbagControl::processImpactData", # Exemple de fonction spécifique
     ]
+   
     actual_entry_point_keys = find_matching_usr_keys(all_functions_dict, entry_point_display_patterns)
-
-
+    
     if not actual_entry_point_keys:
-        print("\n⚠️ Aucun point d'entrée clé n'a correspondu à vos patterns pour la génération des traces textuelles.")
+        print("\n⚠️ Aucun point d'entrée clé n'a correspondu à vos patterns. Voici quelques suggestions de votre codebase:")
+        # Afficher quelques fonctions pour aider l'utilisateur
+        count = 0
+        for k, v in all_functions_dict.items():
+            if "main" in v.get("display_signature","").lower() or "loop" in v.get("display_signature","").lower() or "update" in v.get("display_signature","").lower():
+                print(f"  Suggestion: \"{v.get('display_signature')}\" (Clé: \"{k}\")")
+                count+=1
+            if count >=10: break
+        if count == 0: # Si aucune suggestion, montrer les premières
+             for i, (k,v) in enumerate(all_functions_dict.items()):
+                 if i >= 5: break
+                 print(f"  Suggestion (générale): \"{v.get('display_signature')}\" (Clé: \"{k}\")")
+
+        print("Veuillez mettre à jour 'entry_point_display_patterns' dans le script.")
+        return
     else:
-        print(f"\nTrouvé {len(actual_entry_point_keys)} points d'entrée correspondants pour la génération des traces de logs:")
+        print(f"\nTrouvé {len(actual_entry_point_keys)} points d'entrée pour la génération des traces de logs:")
         for usr_key in actual_entry_point_keys:
-            print(f"  - Tracera: {all_functions_dict.get(usr_key, {}).get('signature_display', 'N/A')} (Clé: {usr_key})")
+            print(f"  - Tracera: {all_functions_dict.get(usr_key, {}).get('display_signature', 'N/A')} (Clé: {usr_key})")
 
     print("\nGenerating text-based log sequence traces...")
     
-    # Le chemin de sortie est relatif à codebase_path, qui devrait être la racine de AutoSystemSim
     output_logs_text_dir_full_path = os.path.join(codebase_path, OUTPUT_LOGS_TEXT_DIR) 
 
     if not os.path.isdir(output_logs_text_dir_full_path):
@@ -308,14 +469,16 @@ def main_generate_traces():
         except Exception as e_dir:
             print(f"❌ ERREUR: Impossible de créer le dossier '{output_logs_text_dir_full_path}': {e_dir}")
             print("    Les fichiers de trace textuelle seront sauvegardés dans le répertoire du script.")
-            output_logs_text_dir_full_path = os.path.dirname(os.path.abspath(__file__)) # Fallback
+            output_logs_text_dir_full_path = os.path.dirname(os.path.abspath(__file__)) 
     else:
         print(f"ℹ️ Utilisation du dossier existant pour les traces textuelles : {os.path.abspath(output_logs_text_dir_full_path)}")
 
     for entry_key in actual_entry_point_keys: 
-        display_name_for_file = all_functions_dict.get(entry_key, {}).get('signature_display', entry_key)
+        display_name_for_file = all_functions_dict.get(entry_key, {}).get('display_signature', entry_key)
         sanitized_filename_part = sanitize_for_filename(display_name_for_file)
         output_txt_filepath = os.path.join(output_logs_text_dir_full_path, f"log_trace_{sanitized_filename_part}.txt")
+        
+        print(f"\n--- Génération de la trace pour: {display_name_for_file} ---")
         generate_text_log_sequence_from_data(entry_key, all_functions_dict, 
                                              output_txt_filepath, max_depth=MAX_TRACE_DEPTH)
 
