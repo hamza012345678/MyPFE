@@ -1,5 +1,5 @@
 // AutoSystemSim/ecu_body_control_module/climate_control.cpp
-#include "calimate_control.h"
+#include "climate_control.h"
 #include "../ecu_power_management/power_monitor.h" // Actual include
 #include <cmath>     // For fabs, std::min/max
 #include <random>    // For simulating sensor drift / small variations

@@ -10,7 +10,7 @@
 #include "../ecu_powertrain_control/transmission_manager.h"
 // #include "../ecu_powertrain_control/fuel_system.h" // Usually managed by EngineManager
 
-#include "../ecu_body_control_module/calimate_control.h"
+#include "../ecu_body_control_module/climate_control.h"
 #include "../ecu_body_control_module/lighting_control.h"
 #include "../ecu_body_control_module/window_control.h"
 // Potentially a higher-level BCM class if we had one
