@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.783212+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path56_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 48,
+        "LogLevel": "INFO",
+        "ApID": "TCU",
+        "CtID": "GEAR",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "TCU",
+        "CtID": "GEAR",
+        "Payload": "Shifted UP. New gear: 53."
+      },
+      "description": "Incohérence détectée sur le log à l'index 48. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.884305+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path41_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "WARN",
+        "ApID": "TCU",
+        "CtID": "DIAG",
+        "Payload": "TCU Diagnostics (L48) completed: ISSUES FOUND."
+      },
+      "description": "Un log attendu est manquant. Attendu : [WARN] TCU Diagnostics (L48) completed: ISSUES FOUND."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 53,
+        "LogLevel": "WARN",
+        "ApID": "TCU",
+        "CtID": "DIAG",
+        "Payload": "TCU Diagnostics (L48) completed: ISSUES FOUND."
+      },
+      "description": "Log inattendu trouvé à l'index 53."
+    }
+  ]
+}

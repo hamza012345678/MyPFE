@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.208363+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path147_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "BCM",
+        "CtID": "PROC",
+        "Payload": "Processing comfort and access requests."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Processing comfort and access requests."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.839109+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path22_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "WARN",
+        "ApID": "VCTRL",
+        "CtID": "LOOP",
+        "Payload": "Main loop skipped. System not init or not RUNNING. Current State val: 80."
+      },
+      "description": "Un log attendu est manquant. Attendu : [WARN] Main loop skipped. System not init or not RUNNING. Current State val: 80."
+    }
+  ]
+}

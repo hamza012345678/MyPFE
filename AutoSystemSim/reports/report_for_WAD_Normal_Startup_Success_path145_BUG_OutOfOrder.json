@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.118642+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path145_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "IHU",
+        "CtID": "HMI",
+        "Payload": "Display: Media player widget active. Info: Default Track. Progress: 35pct."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Display: Media player widget active. Info: Default Track. Progress: 35pct."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 100,
+        "LogLevel": "DEBUG",
+        "ApID": "IHU",
+        "CtID": "HMI",
+        "Payload": "Display: Media player widget active. Info: Default Track. Progress: 35pct."
+      },
+      "description": "Log inattendu trouvé à l'index 100."
+    }
+  ]
+}

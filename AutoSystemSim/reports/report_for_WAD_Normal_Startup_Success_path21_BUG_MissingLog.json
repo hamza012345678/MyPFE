@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.877604+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path21_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "VCTRL",
+        "CtID": "START",
+        "Payload": "Vehicle system initialization: FAILED. State: ERROR (3). See logs."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] Vehicle system initialization: FAILED. State: ERROR (3). See logs."
+    }
+  ]
+}

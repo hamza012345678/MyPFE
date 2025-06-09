@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.851099+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path114_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "ECM",
+        "CtID": "PROC",
+        "Payload": "Updating engine actuators. SimActions: Throttle=15pct (Actual 14.8pct)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Updating engine actuators. SimActions: Throttle=15pct (Actual 14.8pct)."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 42,
+        "LogLevel": "DEBUG",
+        "ApID": "ECM",
+        "CtID": "PROC",
+        "Payload": "Updating engine actuators. SimActions: Throttle=15pct (Actual 14.8pct)."
+      },
+      "description": "Log inattendu trouvé à l'index 42."
+    }
+  ]
+}

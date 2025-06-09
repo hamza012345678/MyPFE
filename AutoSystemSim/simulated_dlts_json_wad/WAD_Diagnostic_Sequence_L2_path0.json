@@ -1,0 +1,26 @@
+[
+  {
+    "Index": 1,
+    "Timestamp": 1749480914.9492285,
+    "Time": "2025-06-09 14:55:14.949",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749489105,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Global diagnostic sequence triggered. Requested Level: 5."
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1749480914.9533274,
+    "Time": "2025-06-09 14:55:14.953",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749489105,
+    "Type": "LOG",
+    "LogLevel": "WARN",
+    "Payload": "Cannot run detailed diagnostics (system not init). Basic checks only (L0 sim)."
+  }
+]

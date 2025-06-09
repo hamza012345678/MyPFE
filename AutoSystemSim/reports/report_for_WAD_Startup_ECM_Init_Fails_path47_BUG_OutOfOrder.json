@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.773167+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path47_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "VCTRL",
+        "CtID": "START",
+        "Payload": "ERROR: TCU init FAILED. Limited functionality."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] ERROR: TCU init FAILED. Limited functionality."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 14,
+        "LogLevel": "ERROR",
+        "ApID": "VCTRL",
+        "CtID": "START",
+        "Payload": "ERROR: TCU init FAILED. Limited functionality."
+      },
+      "description": "Log inattendu trouvé à l'index 14."
+    }
+  ]
+}

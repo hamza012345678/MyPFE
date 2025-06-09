@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.233093+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path43_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "WARN",
+        "ApID": "ECM",
+        "CtID": "DIAG",
+        "Payload": "Diagnostics for Level 91 completed: ISSUES FOUND."
+      },
+      "description": "Un log attendu est manquant. Attendu : [WARN] Diagnostics for Level 91 completed: ISSUES FOUND."
+    }
+  ]
+}

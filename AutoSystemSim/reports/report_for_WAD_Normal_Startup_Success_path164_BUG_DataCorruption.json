@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.411618+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path164_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 176,
+        "LogLevel": "DEBUG",
+        "ApID": "BCM",
+        "CtID": "ACCESS",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "BCM",
+        "CtID": "ACCESS",
+        "Payload": "Door lock actuators status: FL:U, FR:U, RL:U, RR:U."
+      },
+      "description": "Incohérence détectée sur le log à l'index 176. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

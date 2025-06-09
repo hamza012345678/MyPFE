@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:29.015263+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path75.json"
+  },
+  "comparison_summary": {
+    "status": "CLEAN",
+    "total_deviations": 0,
+    "deviation_types": {}
+  },
+  "deviations": []
+}

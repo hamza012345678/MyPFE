@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.745808+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path76_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "SENSOR",
+        "Payload": "CRITICAL: Engine overheating! Coolant Temp: 107.2C. Max Temp: 105.0C."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] CRITICAL: Engine overheating! Coolant Temp: 107.2C. Max Temp: 105.0C."
+    }
+  ]
+}

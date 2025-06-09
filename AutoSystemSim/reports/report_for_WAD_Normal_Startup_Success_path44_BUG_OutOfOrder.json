@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.528499+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path44_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "IGNIT",
+        "Payload": "Over-rev protection: Ignition system DISABLED."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] Over-rev protection: Ignition system DISABLED."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 41,
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "IGNIT",
+        "Payload": "Over-rev protection: Ignition system DISABLED."
+      },
+      "description": "Log inattendu trouvé à l'index 41."
+    }
+  ]
+}

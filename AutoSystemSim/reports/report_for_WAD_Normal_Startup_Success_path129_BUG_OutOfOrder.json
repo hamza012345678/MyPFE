@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.774832+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path129_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "BCM",
+        "CtID": "ACCESS",
+        "Payload": "Central locking request. Locking all doors."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] Central locking request. Locking all doors."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 173,
+        "LogLevel": "INFO",
+        "ApID": "BCM",
+        "CtID": "ACCESS",
+        "Payload": "Central locking request. Locking all doors."
+      },
+      "description": "Log inattendu trouvé à l'index 173."
+    }
+  ]
+}

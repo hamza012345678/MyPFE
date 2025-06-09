@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.880786+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path113_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "IHU",
+        "CtID": "HMI",
+        "Payload": "User input: VolumeKnob UP. Target vol: 60pct."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] User input: VolumeKnob UP. Target vol: 60pct."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 184,
+        "LogLevel": "DEBUG",
+        "ApID": "IHU",
+        "CtID": "HMI",
+        "Payload": "User input: VolumeKnob UP. Target vol: 60pct."
+      },
+      "description": "Log inattendu trouvé à l'index 184."
+    }
+  ]
+}

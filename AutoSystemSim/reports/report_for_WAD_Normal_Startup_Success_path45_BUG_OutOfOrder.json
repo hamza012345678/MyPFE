@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.654517+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path45_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "ABS",
+        "CtID": "STABIL",
+        "Payload": "ESP system managing stability. Sim Sensors: Yaw=5.2deg/s, Steering=15deg."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] ESP system managing stability. Sim Sensors: Yaw=5.2deg/s, Steering=15deg."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 65,
+        "LogLevel": "INFO",
+        "ApID": "ABS",
+        "CtID": "STABIL",
+        "Payload": "ESP system managing stability. Sim Sensors: Yaw=5.2deg/s, Steering=15deg."
+      },
+      "description": "Log inattendu trouvé à l'index 65."
+    }
+  ]
+}

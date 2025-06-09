@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.830759+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path7_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 11,
+        "LogLevel": "DEBUG",
+        "ApID": "VCTRL",
+        "CtID": "PWR",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "VCTRL",
+        "CtID": "PWR",
+        "Payload": "CAN bus B termination: 60 Ohm (Nominal)."
+      },
+      "description": "Incohérence détectée sur le log à l'index 11. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

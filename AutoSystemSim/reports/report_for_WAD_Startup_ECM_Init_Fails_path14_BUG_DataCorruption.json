@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.949209+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path14_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 19,
+        "LogLevel": "INFO",
+        "ApID": "VCTRL",
+        "CtID": "NET",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "VCTRL",
+        "CtID": "NET",
+        "Payload": "Broadcasting network frame: System Active. Node ID: 0x01 (VCTRL)."
+      },
+      "description": "Incohérence détectée sur le log à l'index 19. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

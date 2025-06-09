@@ -1,0 +1,50 @@
+[
+  {
+    "Index": 1,
+    "Timestamp": 1749480823.717708,
+    "Time": "2025-06-09 14:53:43.717",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Global diagnostic sequence triggered. Requested Level: 21."
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1749480823.728427,
+    "Time": "2025-06-09 14:53:43.728",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running diagnostics for ECM (Level 53)."
+  },
+  {
+    "Index": 3,
+    "Timestamp": 1749480823.7314703,
+    "Time": "2025-06-09 14:53:43.731",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "ERROR",
+    "Payload": "Cannot run detailed diagnostics (Level 34 req), module not init."
+  },
+  {
+    "Index": 4,
+    "Timestamp": 1749480823.745386,
+    "Time": "2025-06-09 14:53:43.745",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running basic diagnostics (L0). Status: PASS."
+  }
+]

@@ -1,0 +1,125 @@
+✅ Automatically found and using libclang: /usr/lib/llvm-10/lib/libclang.so
+ℹ️ Using codebase path: /workspaces/MyPFE/AutoSystemSim
+🔍 Parsing: include/EngineControlModule.h
+🔍 Parsing: include/BrakingSystemModule.h
+🔍 Parsing: include/InfotainmentModule.h
+🔍 Parsing: include/TransmissionControlModule.h
+🔍 Parsing: include/BodyControlModule.h
+🔍 Parsing: include/VehicleController.h
+🔍 Parsing: include/common/LoggingUtil.h
+🔍 Parsing: src/InfotainmentModule.cpp
+  [IF_STMT_CONSTRUCT_CHECK L27 in 'Automotive::ECUs::InfotainmentModule::initialize']
+    Cursor File: '/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp', Target File: '/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp', File Match? True
+    Context Init: True (Line 27 in [27, 31]? True)
+    ==> is_constructing_traced_IF set to: True (Original Logic)
+  ++ Constructing IF_STMT L27 in 'Automotive::ECUs::InfotainmentModule::initialize'. Tracing its then/else elements. (TRACE ENABLED for L27)
+    IF_L27 'then' branch (Child 1 L27, Kind COMPOUND_STMT): Calling recursive...
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L27 in 'Automotive::ECUs::InfotainmentModule::initialize::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L27 Children Count: 4
+    -> Child 0 of Parent L27 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=28, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L28 (child of Parent L27).
+    -> Child 1 of Parent L27 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.CALL_EXPR, Spell='operator=', Line=29, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L29 (Kind=CALL_EXPR) of Parent L27.
+    -> Child 2 of Parent L27 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=30, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L30 (child of Parent L27).
+    -> Child 3 of Parent L27 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.BINARY_OPERATOR, Spell='', Line=31, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L31 (Kind=BINARY_OPERATOR) of Parent L27.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::initialize::if_then', returning 2 elements for Parent L27 (Kind=COMPOUND_STMT).
+    IF_L27 'then' branch: Returned 2 elements.
+  -- Finished constructing IF_STMT L27. Then: 2, Else: 0.
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L34 in 'Automotive::ECUs::InfotainmentModule::initialize::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L34 Children Count: 4
+    -> Child 0 of Parent L34 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=35, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L35 (child of Parent L34).
+    -> Child 1 of Parent L34 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.CALL_EXPR, Spell='operator=', Line=36, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L36 (Kind=CALL_EXPR) of Parent L34.
+    -> Child 2 of Parent L34 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=37, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L37 (child of Parent L34).
+    -> Child 3 of Parent L34 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.BINARY_OPERATOR, Spell='', Line=38, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L38 (Kind=BINARY_OPERATOR) of Parent L34.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::initialize::if_then', returning 2 elements for Parent L34 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L41 in 'Automotive::ECUs::InfotainmentModule::initialize::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L41 Children Count: 3
+    -> Child 0 of Parent L41 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=42, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L42 (child of Parent L41).
+    -> Child 1 of Parent L41 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.CALL_EXPR, Spell='operator=', Line=43, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L43 (Kind=CALL_EXPR) of Parent L41.
+    -> Child 2 of Parent L41 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=44, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L44 (child of Parent L41).
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::initialize::if_then', returning 2 elements for Parent L41 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L53 in 'Automotive::ECUs::InfotainmentModule::initialize::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L53 Children Count: 1
+    -> Child 0 of Parent L53 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=54, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L54 (child of Parent L53).
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::initialize::if_then', returning 1 elements for Parent L53 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L55 in 'Automotive::ECUs::InfotainmentModule::initialize::if_else' (Likely a then/else body)
+    PARENT_COMPOUND L55 Children Count: 1
+    -> Child 0 of Parent L55 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=56, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L56 (child of Parent L55).
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::initialize::if_else', returning 1 elements for Parent L55 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L62 in 'Automotive::ECUs::InfotainmentModule::processUserInput::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L62 Children Count: 2
+    -> Child 0 of Parent L62 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=63, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L63 (child of Parent L62).
+    -> Child 1 of Parent L62 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.RETURN_STMT, Spell='', Line=64, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L64 (Kind=RETURN_STMT) of Parent L62.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::processUserInput::if_then', returning 1 elements for Parent L62 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L69 in 'Automotive::ECUs::InfotainmentModule::processUserInput::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L69 Children Count: 3
+    -> Child 0 of Parent L69 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=70, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L70 (child of Parent L69).
+    -> Child 1 of Parent L69 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.CALL_EXPR, Spell='setVolumeLevel', Line=71, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'CALL' L71 (child of Parent L69).
+    -> Child 2 of Parent L69 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.BINARY_OPERATOR, Spell='', Line=72, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L72 (Kind=BINARY_OPERATOR) of Parent L69.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::processUserInput::if_then', returning 2 elements for Parent L69 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L75 in 'Automotive::ECUs::InfotainmentModule::processUserInput::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L75 Children Count: 3
+    -> Child 0 of Parent L75 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=76, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L76 (child of Parent L75).
+    -> Child 1 of Parent L75 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.CALL_EXPR, Spell='setVolumeLevel', Line=77, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'CALL' L77 (child of Parent L75).
+    -> Child 2 of Parent L75 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.BINARY_OPERATOR, Spell='', Line=78, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L78 (Kind=BINARY_OPERATOR) of Parent L75.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::processUserInput::if_then', returning 2 elements for Parent L75 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L81 in 'Automotive::ECUs::InfotainmentModule::processUserInput::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L81 Children Count: 3
+    -> Child 0 of Parent L81 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=82, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L82 (child of Parent L81).
+    -> Child 1 of Parent L81 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.UNEXPOSED_EXPR, Spell='', Line=83, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L83 (Kind=UNEXPOSED_EXPR) of Parent L81.
+    -> Child 2 of Parent L81 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.BINARY_OPERATOR, Spell='', Line=84, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L84 (Kind=BINARY_OPERATOR) of Parent L81.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::processUserInput::if_then', returning 1 elements for Parent L81 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L87 in 'Automotive::ECUs::InfotainmentModule::processUserInput::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L87 Children Count: 2
+    -> Child 0 of Parent L87 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=88, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L88 (child of Parent L87).
+    -> Child 1 of Parent L87 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.BINARY_OPERATOR, Spell='', Line=89, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      -- No element_data for child L89 (Kind=BINARY_OPERATOR) of Parent L87.
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::processUserInput::if_then', returning 1 elements for Parent L87 (Kind=COMPOUND_STMT).
+
+>>> TRACE_COMPOUND_CONTEXT: Called for PARENT_COMPOUND L92 in 'Automotive::ECUs::InfotainmentModule::processUserInput::if_then' (Likely a then/else body)
+    PARENT_COMPOUND L92 Children Count: 1
+    -> Child 0 of Parent L92 (Kind COMPOUND_STMT): Cursor Kind=CursorKind.DO_STMT, Spell='', Line=93, File='/workspaces/MyPFE/AutoSystemSim/src/InfotainmentModule.cpp'
+      ++ Added element 'LOG' L93 (child of Parent L92).
+<<< TRACE_RETURN: From Func='Automotive::ECUs::InfotainmentModule::processUserInput::if_then', returning 1 elements for Parent L92 (Kind=COMPOUND_STMT).
+🔍 Parsing: src/BrakingSystemModule.cpp
+🔍 Parsing: src/VehicleController.cpp
+🔍 Parsing: src/BodyControlModule.cpp
+🔍 Parsing: src/main.cpp
+🔍 Parsing: src/EngineControlModule.cpp
+🔍 Parsing: src/TransmissionControlModule.cpp
+✅ Static analysis results saved to /workspaces/MyPFE/AutoSystemSim/static_analysis_output.json
+
+ℹ️ Static analysis phase completed.

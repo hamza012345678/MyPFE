@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.698535+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path18_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 6,
+        "LogLevel": "INFO",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "Initiating system initialization sequence..."
+      },
+      "description": "Incohérence détectée sur le log à l'index 6. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

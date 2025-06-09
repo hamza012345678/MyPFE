@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.083543+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path116_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "WARN",
+        "ApID": "IHU",
+        "CtID": "AUDIO",
+        "Payload": "Volume at MAX (100pct). Amplifier gain: 0dB (sim)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [WARN] Volume at MAX (100pct). Amplifier gain: 0dB (sim)."
+    }
+  ]
+}

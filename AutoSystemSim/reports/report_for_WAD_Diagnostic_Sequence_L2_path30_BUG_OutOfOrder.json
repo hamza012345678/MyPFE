@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.575637+00:00",
+    "analyzed_trace_file": "WAD_Diagnostic_Sequence_L2_path30_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "TCU",
+        "CtID": "DIAG",
+        "Payload": "Diag L1: Oil temp sensor nominal (45.0C)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] Diag L1: Oil temp sensor nominal (45.0C)."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 22,
+        "LogLevel": "INFO",
+        "ApID": "TCU",
+        "CtID": "DIAG",
+        "Payload": "Diag L1: Oil temp sensor nominal (45.0C)."
+      },
+      "description": "Log inattendu trouvé à l'index 22."
+    }
+  ]
+}

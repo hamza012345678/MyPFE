@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.699771+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path30_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "Simulating external diagnostic tool request (Level 2 fixed)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] Simulating external diagnostic tool request (Level 2 fixed)."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 25,
+        "LogLevel": "INFO",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "Simulating external diagnostic tool request (Level 2 fixed)."
+      },
+      "description": "Log inattendu trouvé à l'index 25."
+    }
+  ]
+}

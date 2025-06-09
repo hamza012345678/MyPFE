@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.476300+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path42_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "WARN",
+        "ApID": "VCTRL",
+        "CtID": "LOOP",
+        "Payload": "Main loop skipped. System not init or not RUNNING. Current State val: 2."
+      },
+      "description": "Un log attendu est manquant. Attendu : [WARN] Main loop skipped. System not init or not RUNNING. Current State val: 2."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 25,
+        "LogLevel": "WARN",
+        "ApID": "VCTRL",
+        "CtID": "LOOP",
+        "Payload": "Main loop skipped. System not init or not RUNNING. Current State val: 2."
+      },
+      "description": "Log inattendu trouvé à l'index 25."
+    }
+  ]
+}

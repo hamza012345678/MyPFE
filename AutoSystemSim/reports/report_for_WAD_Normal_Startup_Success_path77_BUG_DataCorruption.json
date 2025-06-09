@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.909338+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path77_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 63,
+        "LogLevel": "INFO",
+        "ApID": "ABS",
+        "CtID": "STABIL",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "ABS",
+        "CtID": "STABIL",
+        "Payload": "ESP intervention: Understeer detected. Applying brake to FR wheel (20 bar sim)."
+      },
+      "description": "Incohérence détectée sur le log à l'index 63. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

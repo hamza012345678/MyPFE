@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.756444+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path127_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "TCU",
+        "CtID": "HYDRAU",
+        "Payload": "CRITICAL: Transmission oil OVERHEATING! Temp: 122.5C. Max: 120.0C."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] CRITICAL: Transmission oil OVERHEATING! Temp: 122.5C. Max: 120.0C."
+    }
+  ]
+}

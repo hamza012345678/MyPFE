@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.095192+00:00",
+    "analyzed_trace_file": "WAD_Diagnostic_Sequence_L2_path29_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "ECM",
+        "CtID": "DIAG",
+        "Payload": "Diag L1: Coolant temp sensor normal (28.0C)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] Diag L1: Coolant temp sensor normal (28.0C)."
+    }
+  ]
+}

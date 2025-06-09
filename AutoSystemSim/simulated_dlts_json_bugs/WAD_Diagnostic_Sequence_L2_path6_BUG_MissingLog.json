@@ -1,0 +1,122 @@
+[
+  {
+    "Index": 1,
+    "Timestamp": 1749481064.0933018,
+    "Time": "2025-06-09 14:57:44.093",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Global diagnostic sequence triggered. Requested Level: 9."
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1749481064.1023564,
+    "Time": "2025-06-09 14:57:44.102",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "WARN",
+    "Payload": "Cannot run detailed diagnostics (system not init). Basic checks only (L0 sim)."
+  },
+  {
+    "Index": 3,
+    "Timestamp": 1749481064.109008,
+    "Time": "2025-06-09 14:57:44.109",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running diagnostics for ECM (Level 4)."
+  },
+  {
+    "Index": 4,
+    "Timestamp": 1749481064.1203837,
+    "Time": "2025-06-09 14:57:44.120",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "ERROR",
+    "Payload": "Cannot run detailed diagnostics (Level 72 req), module not init."
+  },
+  {
+    "Index": 5,
+    "Timestamp": 1749481064.1261394,
+    "Time": "2025-06-09 14:57:44.126",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running basic diagnostics (L0). Status: PASS."
+  },
+  {
+    "Index": 6,
+    "Timestamp": 1749481064.138315,
+    "Time": "2025-06-09 14:57:44.138",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "WARN",
+    "Payload": "Diag L1: Coolant temp sensor low (12.5C). Normal if engine cold."
+  },
+  {
+    "Index": 7,
+    "Timestamp": 1749481064.1501331,
+    "Time": "2025-06-09 14:57:44.150",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Diag L1: Coolant temp sensor normal (28.0C)."
+  },
+  {
+    "Index": 8,
+    "Timestamp": 1749481064.1531553,
+    "Time": "2025-06-09 14:57:44.153",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running actuator response test (L2)."
+  },
+  {
+    "Index": 9,
+    "Timestamp": 1749481064.1601982,
+    "Time": "2025-06-09 14:57:44.160",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running actuator response test (L3, extended)."
+  },
+  {
+    "Index": 10,
+    "Timestamp": 1749481064.1745691,
+    "Time": "2025-06-09 14:57:44.174",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749484339,
+    "Type": "LOG",
+    "LogLevel": "ERROR",
+    "Payload": "Diag L2+: Glow plug actuator (Diesel) FAILED. Timeout: 500ms."
+  }
+]

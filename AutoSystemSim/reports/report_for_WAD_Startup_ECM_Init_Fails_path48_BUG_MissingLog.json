@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.081428+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path48_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "System not ready for main loop. Check initialization logs (simulated state)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] System not ready for main loop. Check initialization logs (simulated state)."
+    }
+  ]
+}

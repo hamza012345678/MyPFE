@@ -1,0 +1,86 @@
+[
+  {
+    "Index": 1,
+    "Timestamp": 1749480870.20164,
+    "Time": "2025-06-09 14:54:30.201",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Global diagnostic sequence triggered. Requested Level: 89."
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1749480870.2136447,
+    "Time": "2025-06-09 14:54:30.213",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "WARN",
+    "Payload": "Cannot run detailed diagnostics (system not init). Basic checks only (L0 sim)."
+  },
+  {
+    "Index": 3,
+    "Timestamp": 1749480870.2199447,
+    "Time": "2025-06-09 14:54:30.219",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running diagnostics for ECM (Level 16)."
+  },
+  {
+    "Index": 4,
+    "Timestamp": 1749480870.2215781,
+    "Time": "2025-06-09 14:54:30.221",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "ERROR",
+    "Payload": "Cannot run detailed diagnostics (Level 54 req), module not init."
+  },
+  {
+    "Index": 5,
+    "Timestamp": 1749480870.226602,
+    "Time": "2025-06-09 14:54:30.226",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running sensor integrity check (L1)."
+  },
+  {
+    "Index": 6,
+    "Timestamp": 1749480870.2287633,
+    "Time": "2025-06-09 14:54:30.228",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running basic diagnostics (L0). Status: PASS."
+  },
+  {
+    "Index": 7,
+    "Timestamp": 1749480870.2350368,
+    "Time": "2025-06-09 14:54:30.235",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749486684,
+    "Type": "LOG",
+    "LogLevel": "WARN",
+    "Payload": "Diag L1: Coolant temp sensor low (12.5C). Normal if engine cold."
+  }
+]

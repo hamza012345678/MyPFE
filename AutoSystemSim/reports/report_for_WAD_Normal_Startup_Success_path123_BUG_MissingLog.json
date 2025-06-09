@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.654992+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path123_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "System initialization sequence finished by VehicleController."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] System initialization sequence finished by VehicleController."
+    }
+  ]
+}

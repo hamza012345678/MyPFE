@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.664858+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path101_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "TCU",
+        "CtID": "GEAR",
+        "Payload": "Controlling shift solenoids for gear: 50."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Controlling shift solenoids for gear: 50."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 51,
+        "LogLevel": "DEBUG",
+        "ApID": "TCU",
+        "CtID": "GEAR",
+        "Payload": "Controlling shift solenoids for gear: 50."
+      },
+      "description": "Log inattendu trouvé à l'index 51."
+    }
+  ]
+}

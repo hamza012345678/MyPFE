@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.774443+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path2_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "VehicleController instance created."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] VehicleController instance created."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 6,
+        "LogLevel": "DEBUG",
+        "ApID": "SYSTEM",
+        "CtID": "MAIN",
+        "Payload": "VehicleController instance created."
+      },
+      "description": "Log inattendu trouvé à l'index 6."
+    }
+  ]
+}

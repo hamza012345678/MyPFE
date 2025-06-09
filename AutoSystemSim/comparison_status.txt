@@ -1,0 +1,37 @@
+
+--- ANALYSING DLTs from simulated_dlts_json_wad ---
+
+Analyzing file: WAD_FullSystem_OK.json
+  Decision: BUG
+  Issues found (211):
+    Issue 1: UnexpectedLog - Log inattendu observé. (Observed Index: 6)
+    Issue 2: UnexpectedLog - Log inattendu observé. (Observed Index: 7)
+    Issue 3: UnexpectedLog - Log inattendu observé. (Observed Index: 8)
+    Issue 4: UnexpectedLog - Log inattendu observé. (Observed Index: 9)
+    Issue 5: MissingLog - Log attendu manquant. (Observed Index: 10)
+    ... and 206 more issues.
+----------------------------------------
+
+Analyzing file: WAD_TCU_InitFail.json
+  Decision: BUG
+  Issues found (16):
+    Issue 1: UnexpectedLog - Log inattendu observé. (Observed Index: 7)
+    Issue 2: UnexpectedLog - Log inattendu observé. (Observed Index: 8)
+    Issue 3: UnexpectedLog - Log inattendu observé. (Observed Index: 9)
+    Issue 4: UnexpectedLog - Log inattendu observé. (Observed Index: 18)
+    Issue 5: UnexpectedLog - Log inattendu observé. (Observed Index: 19)
+    ... and 11 more issues.
+----------------------------------------
+
+Analyzing file: WAD_ABS_InitFail.json
+  Decision: BUG
+  Issues found (16):
+    Issue 1: UnexpectedLog - Log inattendu observé. (Observed Index: 6)
+    Issue 2: UnexpectedLog - Log inattendu observé. (Observed Index: 7)
+    Issue 3: UnexpectedLog - Log inattendu observé. (Observed Index: 8)
+    Issue 4: UnexpectedLog - Log inattendu observé. (Observed Index: 17)
+    Issue 5: UnexpectedLog - Log inattendu observé. (Observed Index: 18)
+    ... and 11 more issues.
+----------------------------------------
+
+DLT Comparison process finished.

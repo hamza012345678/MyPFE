@@ -1,0 +1,74 @@
+[
+  {
+    "Index": 1,
+    "Timestamp": 1749480823.7259068,
+    "Time": "2025-06-09 14:53:43.725",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Global diagnostic sequence triggered. Requested Level: 21."
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1749480823.72742,
+    "Time": "2025-06-09 14:53:43.727",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "WARN",
+    "Payload": "Cannot run detailed diagnostics (system not init). Basic checks only (L0 sim)."
+  },
+  {
+    "Index": 3,
+    "Timestamp": 1749480823.7303817,
+    "Time": "2025-06-09 14:53:43.730",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "VCTRL",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running diagnostics for ECM (Level 53)."
+  },
+  {
+    "Index": 4,
+    "Timestamp": 1749480823.7372808,
+    "Time": "2025-06-09 14:53:43.737",
+    "ECUId": "SIM_ECU_01",
+    "ApID": null,
+    "CtID": null,
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": null,
+    "Payload": "An unexpected event occurred."
+  },
+  {
+    "Index": 5,
+    "Timestamp": 1749480823.7460728,
+    "Time": "2025-06-09 14:53:43.746",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "ERROR",
+    "Payload": "Cannot run detailed diagnostics (Level 34 req), module not init."
+  },
+  {
+    "Index": 6,
+    "Timestamp": 1749480823.751494,
+    "Time": "2025-06-09 14:53:43.751",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "ECM",
+    "CtID": "DIAG",
+    "SessionID": 1749487676,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Running basic diagnostics (L0). Status: PASS."
+  }
+]

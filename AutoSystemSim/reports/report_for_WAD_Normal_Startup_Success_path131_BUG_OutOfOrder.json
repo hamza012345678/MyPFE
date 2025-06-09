@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.059558+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path131_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "ECM",
+        "CtID": "SENSOR",
+        "Payload": "Checking engine sensors. SimValues: O2=0.85V (Rich), MAF=15.2g/s (Nominal), Coolant=88.1C (Normal)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Checking engine sensors. SimValues: O2=0.85V (Rich), MAF=15.2g/s (Nominal), Coolant=88.1C (Normal)."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 31,
+        "LogLevel": "DEBUG",
+        "ApID": "ECM",
+        "CtID": "SENSOR",
+        "Payload": "Checking engine sensors. SimValues: O2=0.85V (Rich), MAF=15.2g/s (Nominal), Coolant=88.1C (Normal)."
+      },
+      "description": "Log inattendu trouvé à l'index 31."
+    }
+  ]
+}

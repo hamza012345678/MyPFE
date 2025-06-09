@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.491149+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path88_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "WARN",
+        "ApID": "TCU",
+        "CtID": "GEAR",
+        "Payload": "ShiftGearUp ignored. Reason: Not Auto or Not Initialized."
+      },
+      "description": "Un log attendu est manquant. Attendu : [WARN] ShiftGearUp ignored. Reason: Not Auto or Not Initialized."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.274915+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path75_BUG_ExtraLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "EXTRA_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 99,
+        "LogLevel": null,
+        "ApID": null,
+        "CtID": null,
+        "Payload": "An unexpected event occurred."
+      },
+      "description": "Log inattendu trouvé à l'index 99."
+    }
+  ]
+}

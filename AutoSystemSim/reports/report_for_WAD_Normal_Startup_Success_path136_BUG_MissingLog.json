@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.328022+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path136_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "VCTRL",
+        "CtID": "LOOP",
+        "Payload": "Running main vehicle loop iteration. Vehicle State val: 40."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Running main vehicle loop iteration. Vehicle State val: 40."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.869692+00:00",
+    "analyzed_trace_file": "WAD_Diagnostic_Sequence_L2_path4_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "VCTRL",
+        "CtID": "DIAG",
+        "Payload": "Running diagnostics for ECM (Level 25)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [INFO] Running diagnostics for ECM (Level 25)."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 4,
+        "LogLevel": "INFO",
+        "ApID": "VCTRL",
+        "CtID": "DIAG",
+        "Payload": "Running diagnostics for ECM (Level 25)."
+      },
+      "description": "Log inattendu trouvé à l'index 4."
+    }
+  ]
+}

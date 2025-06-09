@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.418079+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path165_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 269,
+        "LogLevel": "INFO",
+        "ApID": "BCM",
+        "CtID": "DIAG",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "INFO",
+        "ApID": "BCM",
+        "CtID": "DIAG",
+        "Payload": "BCM Diagnostics (L9) completed: PASS."
+      },
+      "description": "Incohérence détectée sur le log à l'index 269. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

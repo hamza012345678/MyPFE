@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.402682+00:00",
+    "analyzed_trace_file": "WAD_Diagnostic_Sequence_L2_path5_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "DIAG",
+        "Payload": "Cannot run detailed diagnostics (Level 72 req), module not init."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] Cannot run detailed diagnostics (Level 72 req), module not init."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 5,
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "DIAG",
+        "Payload": "Cannot run detailed diagnostics (Level 72 req), module not init."
+      },
+      "description": "Log inattendu trouvé à l'index 5."
+    }
+  ]
+}

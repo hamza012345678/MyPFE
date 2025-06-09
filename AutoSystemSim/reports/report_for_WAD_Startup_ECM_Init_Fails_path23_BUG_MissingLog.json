@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.102950+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path23_BUG_MissingLog.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "TCU",
+        "CtID": "DIAG",
+        "Payload": "Cannot run TCU diagnostics (Level 72 req), module not init."
+      },
+      "description": "Un log attendu est manquant. Attendu : [ERROR] Cannot run TCU diagnostics (Level 72 req), module not init."
+    }
+  ]
+}

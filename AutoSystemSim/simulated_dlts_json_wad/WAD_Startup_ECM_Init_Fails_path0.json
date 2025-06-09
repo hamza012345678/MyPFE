@@ -1,0 +1,26 @@
+[
+  {
+    "Index": 1,
+    "Timestamp": 1749480868.7946715,
+    "Time": "2025-06-09 14:54:28.794",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "SYSTEM",
+    "CtID": "BOOT",
+    "SessionID": 1749487134,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "Dummy Automotive Application STARTING. Version: 1.0.1 (fixed)."
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1749480868.8060005,
+    "Time": "2025-06-09 14:54:28.806",
+    "ECUId": "SIM_ECU_01",
+    "ApID": "SYSTEM",
+    "CtID": "BOOT",
+    "SessionID": 1749487134,
+    "Type": "LOG",
+    "LogLevel": "INFO",
+    "Payload": "App started with 26 arguments. First arg: 'argv [ 1 ]'."
+  }
+]

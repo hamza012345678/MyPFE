@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.013547+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path29_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 40,
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "IGNIT",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "ECM",
+        "CtID": "IGNIT",
+        "Payload": "Over-rev protection: Ignition system DISABLED."
+      },
+      "description": "Incohérence détectée sur le log à l'index 40. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

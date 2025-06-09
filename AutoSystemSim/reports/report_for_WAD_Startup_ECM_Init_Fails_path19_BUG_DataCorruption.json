@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:28.318524+00:00",
+    "analyzed_trace_file": "WAD_Startup_ECM_Init_Fails_path19_BUG_DataCorruption.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 1,
+    "deviation_types": {
+      "LOG_MISMATCH": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "LOG_MISMATCH",
+      "log_details": {
+        "index": 18,
+        "LogLevel": "ERROR",
+        "ApID": "VCTRL",
+        "CtID": "START",
+        "Payload": "Corrupted data detected: val=-9999.99, status=0xFFFFFFFF"
+      },
+      "expected_behavior": {
+        "LogLevel": "ERROR",
+        "ApID": "VCTRL",
+        "CtID": "START",
+        "Payload": "Vehicle system initialization: FAILED. State: ERROR (3). See logs."
+      },
+      "description": "Incohérence détectée sur le log à l'index 18. Champ(s) affecté(s): Payload."
+    }
+  ]
+}

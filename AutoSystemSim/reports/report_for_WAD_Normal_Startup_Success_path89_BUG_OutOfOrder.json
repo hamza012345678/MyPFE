@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "report_generated_at": "2025-06-09T15:32:27.721118+00:00",
+    "analyzed_trace_file": "WAD_Normal_Startup_Success_path89_BUG_OutOfOrder.json"
+  },
+  "comparison_summary": {
+    "status": "DEVIATION_DETECTED",
+    "total_deviations": 2,
+    "deviation_types": {
+      "EXTRA_LOG": 1,
+      "MISSING_LOG": 1
+    }
+  },
+  "deviations": [
+    {
+      "type": "MISSING_LOG",
+      "expected_behavior": {
+        "LogLevel": "DEBUG",
+        "ApID": "ECM",
+        "CtID": "IGNIT",
+        "Payload": "Ignition control N/A for electric motor (Type 2)."
+      },
+      "description": "Un log attendu est manquant. Attendu : [DEBUG] Ignition control N/A for electric motor (Type 2)."
+    },
+    {
+      "type": "EXTRA_LOG",
+      "log_details": {
+        "index": 135,
+        "LogLevel": "DEBUG",
+        "ApID": "ECM",
+        "CtID": "IGNIT",
+        "Payload": "Ignition control N/A for electric motor (Type 2)."
+      },
+      "description": "Log inattendu trouvé à l'index 135."
+    }
+  ]
+}
